@@ -86,21 +86,6 @@ st.markdown("""
         text-align: center;
     }
     
-    .footer {
-        margin-top: 4rem;
-        padding: 2rem;
-        text-align: center;
-        border-top: 1px solid #333;
-        background: #1a1a1a;
-    }
-    
-    .footer-title {
-        color: #ffffff;
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-    }
-    
     .social-links {
         display: flex;
         justify-content: center;
@@ -115,6 +100,20 @@ st.markdown("""
         border-radius: 50%;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         text-decoration: none;
+    }
+    .footer {
+        margin-top: 4rem;
+        padding: 2rem;
+        text-align: center;
+        border-top: 1px solid #333;
+        background: #1a1a1a;
+    }
+    
+    .footer-title {
+        color: #ffffff;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
     }
     
     .social-link:hover {
@@ -139,19 +138,31 @@ st.markdown("""
         text-align: center;
         margin: 2rem 0 1rem 0;
     }
+      
+    .support-section {
+        margin: 2rem 0 1rem 0;
+        text-align: center;
+    }
+
+    .support-text {
+        color: #b3b3b3;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }      
+
 </style>
 """, unsafe_allow_html=True)
 
 @st.cache_resource
 def load_resources():
-    df = pd.read_pickle("processed_movies.pkl")
-    final_matrix = joblib.load("final_matrix.pkl")
-    return df, final_matrix
+    df = joblib.load("processed_movies.pkl")
+    tfidf_matrix = joblib.load("tfidf_matrix.pkl")
+    return df, tfidf_matrix
 
-def recommend_movies(df, final_matrix, movie_name, top_n=5):
+def recommend_movies(df, tfidf_matrix, movie_name, top_n=5):
     if movie_name in df['title'].values:
         index = df[df['title'] == movie_name].index[0]
-        distances = cosine_similarity(final_matrix[index], final_matrix).flatten()
+        distances = cosine_similarity(tfidf_matrix[index], tfidf_matrix).flatten()
         sorted_distances = sorted(enumerate(distances), key=lambda x: x[1], reverse=True)[1:top_n+1]
         recommended = [df.iloc[i[0]]['title'] for i in sorted_distances]
         return recommended
@@ -159,7 +170,7 @@ def recommend_movies(df, final_matrix, movie_name, top_n=5):
         return []
 
 # Load data
-df, final_matrix = load_resources()
+df, tfidf_matrix = load_resources()
 
 # Header
 st.markdown("""
@@ -174,7 +185,7 @@ num_recommendations = st.slider(
     "Number of recommendations:",
     min_value=3,
     max_value=10,
-    value=5,
+    value=1,
     help="Choose how many movies to recommend"
 )
 st.markdown('</div>', unsafe_allow_html=True)
@@ -186,7 +197,7 @@ st.markdown('<p class="section-title">🎬 Find Your Movie</p>', unsafe_allow_ht
 with st.form(key='movie_form'):
     selected_movie = st.text_input(
         "Movie name",
-        placeholder="Type movie name (e.g., Interstellar, The Dark Knight, Inception...)",
+        placeholder="Type exact movie name (e.g., Interstellar, The Dark Knight, Inception...)",
         label_visibility="collapsed"
     )
     
@@ -203,7 +214,7 @@ st.markdown('</div>', unsafe_allow_html=True)
 # Handle recommendations
 if submit_button and selected_movie:
     with st.spinner("🔄 Finding perfect matches..."):
-        recommendations = recommend_movies(df, final_matrix, selected_movie.strip(), num_recommendations)
+        recommendations = recommend_movies(df, tfidf_matrix, selected_movie.strip(), num_recommendations)
     
     if recommendations:
         st.markdown(f'<h2 class="success-header">🎭 Movies Similar to "{selected_movie}"</h2>', unsafe_allow_html=True)
@@ -231,6 +242,16 @@ elif submit_button and not selected_movie:
 # Footer
 st.markdown("""
 <div class="footer">
+    <div class="support-section">
+        <p class="support-text">☕ Enjoying Flicker Flix? Support the project!</p>
+        <a href="https://buymeacoffee.com/adinraja" target="_blank" class="coffee-button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px; vertical-align: middle;">
+            <path d="M20.216 6.415l-.132-.666c-.119-.598-.388-1.163-.766-1.688a4.436 4.436 0 0 0-1.348-1.137c-.314-.162-.654-.1-.87.15-.216.25-.1.666.15.87.398.33.717.711.951 1.137.234.426.394.888.479 1.364l.132.696c.119.598.388 1.163.766 1.688.378.525.856.942 1.348 1.137.314.162.654.1.87-.15.216-.25.1-.666-.15-.87-.398-.33-.717-.711-.951-1.137-.234-.426-.394-.888-.479-1.364zM12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+            <path d="M12 6c-3.309 0-6 2.691-6 6s2.691 6 6 6 6-2.691 6-6-2.691-6-6-6-2.691-6-6-6zm0 10c-2.206 0-4-1.794-4-4s1.794-4 4-4 4 1.794 4 4-1.794 4-4 4z"/>
+            </svg>
+            Buy Me a Coffee
+        </a>
+    </div>
     <p class="footer-title"> A Project by ~  Adin Raja✌️</p>
     <div class="social-links">
         <a href="https://github.com/adin11" target="_blank" class="social-link">
