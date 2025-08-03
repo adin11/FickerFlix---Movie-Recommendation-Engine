@@ -10,15 +10,15 @@ COPY requirements.txt .
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy all app files
+# Copy all app files (including .csv and .pkl files)
 COPY . .
 
-# Expose the default port (can be overwritten by Railway)
+# Expose the default port (Railway will override it with $PORT)
 EXPOSE 7860
 
-# Don't set STREAMLIT_SERVER_PORT statically — let $PORT pass through
+# Streamlit settings
 ENV STREAMLIT_SERVER_HEADLESS=true
 ENV STREAMLIT_SERVER_ENABLECORS=false
 
-# Run the Streamlit app using the runtime $PORT
-CMD ["sh", "-c", "streamlit run app.py --server.port=${PORT}"]
+# Run Streamlit on Railway's dynamic port
+CMD ["sh", "-c", "streamlit run app.py --server.port=$PORT"]
