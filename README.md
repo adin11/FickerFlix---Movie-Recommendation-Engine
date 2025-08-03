@@ -10,8 +10,8 @@ It features a clean and simple **Streamlit UI**, allowing users to search for an
 ---
 
 ## 📽️ Video Overview
-<!-- Embed or link a demo walkthrough video here -->
-**(Coming soon)**
+
+https://github.com/user-attachments/assets/9b85a021-401a-4c01-93ba-3f2e34f34e48
 
 ---
 
