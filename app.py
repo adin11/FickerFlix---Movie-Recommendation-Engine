@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
-import joblib
 from sklearn.metrics.pairwise import cosine_similarity
+from scipy.sparse import load_npz
+
 
 # Page configuration
 st.set_page_config(
@@ -156,7 +157,7 @@ st.markdown("""
 @st.cache_resource
 def load_resources():
     df = pd.read_csv("processed_movies.csv")
-    tfidf_matrix = joblib.load("tfidf_matrix.pkl")
+    tfidf_matrix = load_npz("tfidf_matrix.npz")
     return df, tfidf_matrix
 
 def recommend_movies(df, tfidf_matrix, movie_name, top_n=5):

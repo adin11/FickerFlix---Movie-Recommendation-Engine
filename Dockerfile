@@ -1,24 +1,27 @@
-# Use the official Python image
+# Use official Python image
 FROM python:3.10-slim
 
 # Set working directory
 WORKDIR /app
 
-# Copy requirements
-COPY requirements.txt .
+# Install system dependencies (git-lfs required if building with .git context)
+RUN apt-get update && \
+    apt-get install -y git git-lfs && \
+    git lfs install
 
-# Install dependencies
+# Copy requirements and install
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy all app files (including .csv and .pkl files)
+# Copy all app files (including .csv and .npz files)
 COPY . .
 
-# Expose the default port (Railway will override it with $PORT)
+# Expose Streamlit default port (Railway will override this with $PORT)
 EXPOSE 7860
 
-# Streamlit settings
+# Streamlit environment settings
 ENV STREAMLIT_SERVER_HEADLESS=true
 ENV STREAMLIT_SERVER_ENABLECORS=false
 
-# Run Streamlit on Railway's dynamic port
-CMD ["sh", "-c", "streamlit run app.py --server.port=$PORT"]
+# Start the Streamlit app using Railway's dynamic port
+CMD ["sh", "-c", "streamlit run app.py --server.port=${PORT:-7860}"]

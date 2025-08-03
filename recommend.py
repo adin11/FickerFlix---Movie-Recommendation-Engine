@@ -5,7 +5,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics.pairwise import cosine_similarity
 from scipy.sparse import hstack
 import ast
-import joblib
+from scipy.sparse import save_npz
 
 def load_data():
     print("Loading Data...")
@@ -64,12 +64,18 @@ def main():
     tfidf_matrix = vectorize_scaling(df)
     recommend(df,'3 Idiots',tfidf_matrix,5)
 
-    df.to_csv('processed_movies.csv',index=False)
-    joblib.dump(tfidf_matrix, "tfidf_matrix.pkl")
+    # df.to_csv('processed_movies.csv',index=False)
+    save_npz("tfidf_matrix.npz", tfidf_matrix)
     print("✅ Saved all components successfully.")
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
+
 
 
 
