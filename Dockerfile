@@ -1,22 +1,19 @@
-# Use the official lightweight Python image.
+# Use an official Python runtime as a base image
 FROM python:3.10-slim
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
-# Copy project files
-COPY . /app/
+# Copy the requirements file and install dependencies
+COPY requirements.txt .
 
-# Install pip packages
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port (Railway uses environment variable)
+# Copy all other files
+COPY . .
+
+# Expose the port Railway provides
 EXPOSE 8080
 
-# Run streamlit and bind to 0.0.0.0 and port from env variable
-CMD streamlit run app.py --server.address=0.0.0.0 --server.port=${PORT}
+# Run Streamlit using the correct port
+CMD streamlit run app.py --server.port=$PORT --server.enableCORS=false
