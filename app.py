@@ -157,7 +157,7 @@ st.markdown("""
 @st.cache_resource
 def load_resources():
     df = pd.read_csv("processed_movies.csv")
-    tfidf_matrix = load_npz("tfidf_matrix.npz")
+    tfidf_matrix = load_npz("tfidf_matrix.npz",allow_pickle=True)
     return df, tfidf_matrix
 
 def recommend_movies(df, tfidf_matrix, movie_name, top_n=5):
