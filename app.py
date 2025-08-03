@@ -155,7 +155,7 @@ st.markdown("""
 
 @st.cache_resource
 def load_resources():
-    df = joblib.load("processed_movies.pkl")
+    df = pd.read_csv("processed_movies.csv")
     tfidf_matrix = joblib.load("tfidf_matrix.pkl")
     return df, tfidf_matrix
 
