@@ -1,19 +1,25 @@
-# Use an official Python runtime as a base image
+# Use the official Python image
 FROM python:3.10-slim
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy the requirements file and install dependencies
+# Copy requirements
 COPY requirements.txt .
 
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy all other files
+# Copy all app files
 COPY . .
 
-# Expose the port Railway provides
-EXPOSE 8080
+# Expose the port (Railway assigns one via $PORT env variable)
+EXPOSE 7860
 
-# Run Streamlit using the correct port
-CMD streamlit run app.py --server.port=$PORT --server.enableCORS=false
+# Set environment variable for Streamlit
+ENV STREAMLIT_SERVER_PORT=$PORT
+ENV STREAMLIT_SERVER_HEADLESS=true
+ENV STREAMLIT_SERVER_ENABLECORS=false
+
+# Run the Streamlit app
+CMD ["sh", "-c", "streamlit run app.py --server.port=$PORT"]
