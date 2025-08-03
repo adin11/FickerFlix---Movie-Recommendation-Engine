@@ -64,7 +64,7 @@ def main():
     tfidf_matrix = vectorize_scaling(df)
     recommend(df,'3 Idiots',tfidf_matrix,5)
 
-    joblib.dump(df, "processed_movies.pkl")
+    df.to_csv('processed_movies.csv',index=False)
     joblib.dump(tfidf_matrix, "tfidf_matrix.pkl")
     print("✅ Saved all components successfully.")
 
