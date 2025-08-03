@@ -13,13 +13,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy all app files
 COPY . .
 
-# Expose the port (Railway assigns one via $PORT env variable)
+# Expose the default port (can be overwritten by Railway)
 EXPOSE 7860
 
-# Set environment variable for Streamlit
-ENV STREAMLIT_SERVER_PORT=$PORT
+# Don't set STREAMLIT_SERVER_PORT statically — let $PORT pass through
 ENV STREAMLIT_SERVER_HEADLESS=true
 ENV STREAMLIT_SERVER_ENABLECORS=false
 
-# Run the Streamlit app
-CMD ["sh", "-c", "streamlit run app.py --server.port=$PORT"]
+# Run the Streamlit app using the runtime $PORT
+CMD ["sh", "-c", "streamlit run app.py --server.port=${PORT}"]
