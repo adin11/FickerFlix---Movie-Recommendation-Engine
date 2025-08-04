@@ -3,6 +3,10 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from scipy.sparse import load_npz
 
+# 🛡️ Lightweight healthcheck endpoint to save resources
+if "healthcheck" in st.experimental_get_query_params():
+    st.write("✅ Healthcheck: OK")
+    st.stop()
 
 # Page configuration
 st.set_page_config(
