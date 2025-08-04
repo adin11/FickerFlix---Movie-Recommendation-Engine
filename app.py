@@ -3,11 +3,6 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from scipy.sparse import load_npz
 
-# 🛡️ Lightweight healthcheck endpoint to save resources
-if "healthcheck" in st.query_params():
-    st.write("✅ Healthcheck: OK")
-    st.stop()
-
 # Page configuration
 st.set_page_config(
     page_title="Flicker Flix",
@@ -15,6 +10,11 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed"
 )
+
+# 🛡️ Lightweight healthcheck endpoint to save resources
+if "healthcheck" in st.query_params:
+    st.write("✅ Healthcheck: OK")
+    st.stop()
 
 # Custom CSS for dark theme
 st.markdown("""
