@@ -1,5 +1,5 @@
 # 🎬 Flicker-Flix: Personalized Movie Recommendation System
-> **🔗 Live App:** [(https://flickerflix.streamlit.app/)]
+> **🔗 Live App:** (https://flickerflix.streamlit.app/)
 
 ---
 ## 📌 Project Overview
