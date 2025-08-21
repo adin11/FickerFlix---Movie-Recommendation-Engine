@@ -1,12 +1,12 @@
 # 🎬 Flicker-Flix: Personalized Movie Recommendation System
-> **🔗 Live App:** (https://flickerflix.streamlit.app/)
+🔗 Live App:[FlickerFlix](https://flickerflix.streamlit.app/)
 
 ---
 ## 📌 Project Overview
 
-This is a **content-based movie recommendation system** designed to assist users to watch similar movies based on their cinema taste. Unlike many similar projects that rely on static or limited datasets, this project uses **self-scraped 2 lakh+ movie metadata** to provide **highly adaptable and accurate recommendations**.
+This is a **content-based movie recommendation system** designed to assist users to watch similar movies based on their cinema taste. Unlike many similar projects that rely on static or limited datasets, this project uses **self-scraped 2 lakh+ movie metadata** from TMDB API to provide **highly adaptable and accurate recommendations**.
 
-It features a clean and simple **Streamlit UI**, allowing users to search for any movie and receive personalized recommendations based on content similarity — not ratings or user behavior.
+This project is a full stack solution where we web-scraped the data using `requests` module, applied pre-processing techniques like lemmatization using `Nltk`module and calculated cosine similairty using tf-idf matrix.
 
 ---
 ## 📽️ Video Overview
@@ -24,18 +24,22 @@ This project uses a **Content-Based Filtering** technique. Here's how it works:
    - Includes genres, keywords, cast, crew, and overviews.
 
 2. **Metadata Tag Creation**:  
-   - Combined relevant features into a single `tag` column.
+   - Combined relevant features into a single `all_text` column.
    - Cleaned and normalized text (e.g., lowercase, stemming, removing spaces).
 
-3. **Vectorization & Similarity Calculation**:  
-   - Used **CountVectorizer** to convert `tag` text into a numerical matrix.
-   - Calculated **cosine similarity** between movies based on tag vectors.
-   - Stored similarity scores and movie metadata into a serialized `.pkl` file for faster loading.
+3. **NLTK Pre-processing**:
+   - Used NLTK library to perfrom lemmatization
+   - removed the stopwords from the combined text
 
-4. **Recommendation Logic**:  
+4. **Vectorization & Similarity Calculation**:  
+   - Used **TF-IDF** to convert `all_text` column into a numerical matrix.
+   - Calculated **cosine similarity** between movies based on tag vectors.
+   - Stored similarity scores and movie metadata into a serialized `.npz` file for faster loading.
+
+5. **Recommendation Logic**:  
    - User searches from a movie.
    - The app fetches the top N most similar movies from the precomputed similarity matrix.
-   - Poster images are fetched dynamically using the TMDb API.
+   - Displays the recommended movies on the screen
 
 ---
 
@@ -57,8 +61,9 @@ This project uses a **Content-Based Filtering** technique. Here's how it works:
 - **Python**
 - **Pandas**, **NumPy**
 - **Scikit-learn** (TFIDF Vectorizer, Cosine Similarity)
+- **SciPy** (for serializing the tfidf matrix in npz format)
 - **Streamlit** (Frontend & UI)
-- **TMDb API** (for fetching movie posters)
+- **TMDb API** (for fetching movie metadata)
 - **Streamlit Community Cloud** (for quick deployment)
 - **Uptime Robot** (For pinging the /heathcheck endpoint to avoid cold start)
 
@@ -71,25 +76,8 @@ This project uses a **Content-Based Filtering** technique. Here's how it works:
 
 ---
 
-## 🚀 Running the Project Locally
+## Running the Project Locally
 
-```bash
-# Clone the repository
-git clone https://github.com/adin11/FlickerFlix---Movie-Recommendation-Engine.git
-cd FlickerFlix---Movie-Recommendation-Engine
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the app
-streamlit run app.py
-
-
-
-
-
-
-
-
-
-
+1. Clone the repository
+2. Navigate to the current directory
+3. Run the app.py file using `streamlit run app.py`
