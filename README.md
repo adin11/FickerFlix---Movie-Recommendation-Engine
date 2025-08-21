@@ -9,7 +9,7 @@ This is a **content-based movie recommendation system** designed to assist users
 This is an **End-to-End** Project where we web-scraped the data using `requests` module, applied pre-processing techniques like lemmatization using `Nltk`module and calculated cosine similairty using tf-idf matrix.
 
 ## How this system is different from other recommendation sytems❓
-Most existing recommendation systems available use the pre-existing old kaggle dataset, whereas in this project we used our own custom self scraped movie meta-data which consists of more up-to-date data. Instead of countvectorizer we used tf-idf vectorizer which uses a slighlty efficient approach and assigns more weight to words with less frequency. We applied lemmatization rather than stemming to keep the base words grammer perfect
+Most existing recommendation systems available use the pre-existing old kaggle dataset, whereas in this project we used our own custom self scraped movie meta-data which consists of more up-to-date data. Instead of countvectorizer we used tf-idf vectorizer which uses a slighlty efficient approach and assigns more weight to words with less frequency. We applied lemmatization rather than stemming to keep the base words grammar perfect
 
 
 ---
