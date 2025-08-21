@@ -1,10 +1,10 @@
 # 🎬 Flicker-Flix: Personalized Movie Recommendation System
-### 🔗 Live App:[FlickerFlix](https://flickerflix.streamlit.app/)
+### 🔗 Live App: [FlickerFlix](https://flickerflix.streamlit.app/)
 
 ---
 ## 📌 Project Overview
 
-This is a **content-based movie recommendation system** designed to assist users to watch similar movies based on their cinema taste. Unlike many similar projects that rely on static or limited datasets, this project uses **self-scraped 2 lakh+ movie metadata** from TMDB API to provide **highly adaptable and accurate recommendations**.
+This is a **content-based movie recommendation system** designed to assist users to watch similar movies based on their cinema taste. Unlike many similar projects that rely on static or limited datasets, this project uses **self-scraped 2 lakh+ movie metadata** from TMDB API to provide **accurate recommendations**.
 
 This is an **End-to-End** Project where we web-scraped the data using `requests` module, applied pre-processing techniques like lemmatization using `Nltk`module and calculated cosine similairty using tf-idf matrix.
 
