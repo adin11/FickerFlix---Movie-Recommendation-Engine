@@ -1,12 +1,16 @@
 # 🎬 Flicker-Flix: Personalized Movie Recommendation System
-🔗 Live App:[FlickerFlix](https://flickerflix.streamlit.app/)
+### 🔗 Live App:[FlickerFlix](https://flickerflix.streamlit.app/)
 
 ---
 ## 📌 Project Overview
 
 This is a **content-based movie recommendation system** designed to assist users to watch similar movies based on their cinema taste. Unlike many similar projects that rely on static or limited datasets, this project uses **self-scraped 2 lakh+ movie metadata** from TMDB API to provide **highly adaptable and accurate recommendations**.
 
-This project is a full stack solution where we web-scraped the data using `requests` module, applied pre-processing techniques like lemmatization using `Nltk`module and calculated cosine similairty using tf-idf matrix.
+This is an **End-to-End** Project where we web-scraped the data using `requests` module, applied pre-processing techniques like lemmatization using `Nltk`module and calculated cosine similairty using tf-idf matrix.
+
+## How this system is different from other recommendation sytems❓
+Most existing recommendation systems available use the pre-existing old kaggle dataset, whereas in this project we used our own custom self scraped movie meta-data which consists of more up-to-date data. Instead of countvectorizer we used tf-idf vectorizer which uses a slighlty efficient approach and assigns more weight to words with less frequency. We applied lemmatization rather than stemming to keep the base words grammer perfect
+
 
 ---
 ## 📽️ Video Overview
@@ -28,8 +32,8 @@ This project uses a **Content-Based Filtering** technique. Here's how it works:
    - Cleaned and normalized text (e.g., lowercase, stemming, removing spaces).
 
 3. **NLTK Pre-processing**:
-   - Used NLTK library to perfrom lemmatization
-   - removed the stopwords from the combined text
+   - Used NLTK library to perfrom lemmatization, lowercasing and stopwards removal
+   - Removed the stopwords from the combined text
 
 4. **Vectorization & Similarity Calculation**:  
    - Used **TF-IDF** to convert `all_text` column into a numerical matrix.
@@ -48,11 +52,11 @@ This project uses a **Content-Based Filtering** technique. Here's how it works:
 | File/Folder | Description |
 |-------------|-------------|
 | `app.py` | Main Streamlit script for UI and recommendation logic |
-| `processes_movies.pkl` | Processed movie metadata with tags |
-| `final_matrix.pkl` | Precomputed cosine similarity matrix |
+| `processes_movies.csv` | Our self-scraped dataset |
+| `tfidf matrix.npz` | Precomputed tf-idf similarity matrix |
 | `recommend.py` | Script for re-training the recommender on new data for re-producibility |
 | `all_scraper` | Script used to scrape latest movie data |
-| `README.md` | You’re reading it! |
+
 
 ---
 
